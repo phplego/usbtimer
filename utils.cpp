@@ -162,3 +162,18 @@ void MQTT_connect(Adafruit_MQTT_Client * mqtt) {
     }
     Serial.println("MQTT Connected!");
 }
+
+
+String beautifyTime(int millis)
+{
+    char str[8];
+    float seconds = (float)millis / 1000;
+    int minutes = seconds / 60;
+    // if(!minutes)
+    //     return String((float)millis/1000, 1) + " s";
+
+    sprintf(str, "%02d:%04.1f", minutes, seconds - 60 * minutes);
+    return String(str);
+
+    //return String(minutes) + " m " + String(seconds - 60 * minutes, 1) + " s";
+}

@@ -11,3 +11,4 @@ bool loadConfig(const char * filename, std::function<void(DynamicJsonDocument)> 
 bool saveConfig(const char * filename, DynamicJsonDocument json);
 bool saveConfig(const char * filename, String jsonStr);
 void MQTT_connect(Adafruit_MQTT_Client * mqtt);
+String beautifyTime(int millis);

@@ -11,6 +11,7 @@ void WebService::init()
     String menu;
     menu += "<div>";
     menu += "<a href='/'>index</a> ";
+    menu += "<a href='/timer'>timer</a> ";
     menu += "<a href='/config'>config</a> ";
     menu += "<a href='/logout'>logout</a> ";
     menu += "</div><hr>";
@@ -20,6 +21,7 @@ void WebService::init()
         str += menu;
         str += "<pre>";
         str += String() + "   Remaining time: " + Globals::remainingTime / 1000 + " sec \n";
+        str += String() + "                   " + beautifyTime(Globals::remainingTime) + " \n";
         str += "\n";
         
         str += String() + " Firmware Version: " + Globals::appVersion + " \n";
@@ -65,6 +67,26 @@ void WebService::init()
         });
     });
     
+    // Timer settings
+    this->server->on("/timer", [this, menu](){
+
+        if(this->server->method() == HTTP_POST){
+            String newRemaining = this->server->arg("remaining");
+            Globals::remainingTime = atoi(newRemaining.c_str()) * 1000;
+        }
+
+        String output = "";
+        output += menu;
+        output += "<form method='post'>";
+        output += "<input type='number' name='remaining' value=3 style='font-size:25px'>";
+        output += "</br>";
+        output += "<input type='submit'>";
+        output += "</form>";
+        server->send(200, "text/html", output);
+
+    });
+
+
 
     // Trying to read file (if route not found)
     this->server->onNotFound( [this](){

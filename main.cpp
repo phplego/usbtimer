@@ -61,19 +61,6 @@ void turnOff()
     digitalWrite(PIN_RELY, LOW);
 }
 
-String butifyTime(int millis)
-{
-    char str[8];
-    float seconds = (float)millis / 1000;
-    int minutes = seconds / 60;
-    // if(!minutes)
-    //     return String((float)millis/1000, 1) + " s";
-
-    sprintf(str, "%02d:%04.1f", minutes, seconds - 60 * minutes);
-    return String(str);
-
-    //return String(minutes) + " m " + String(seconds - 60 * minutes, 1) + " s";
-}
 
 ulong  infoMsgUntil = 0;
 String infoMsg = "";
@@ -92,7 +79,7 @@ void displayLoop()
     else
     {
         if(Globals::remainingTime > 0){
-            display.drawString(0, 0, butifyTime(Globals::remainingTime));
+            display.drawString(0, 0, beautifyTime(Globals::remainingTime));
         }
         else{
             display.drawString(0, 0, "OFF");
